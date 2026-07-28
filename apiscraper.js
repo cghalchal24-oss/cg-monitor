@@ -1,6 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+// सिर्फ 7 मुख्य वेबसाइटें (सभी 33 जिलों को हटा दिया)
 const websites = [
   { name: 'CG Vyapam', url: 'https://cgvyapam.choice.gov.in/' },
   { name: 'CGPSC', url: 'https://psc.cg.gov.in/' },
@@ -8,17 +9,7 @@ const websites = [
   { name: 'CG Police', url: 'https://cgpolice.gov.in/' },
   { name: 'CG Forest', url: 'https://cgforest.gov.in/' },
   { name: 'NHM CG', url: 'https://www.nhmcg.in/' },
-  { name: 'CSEB', url: 'https://cseb.gov.in/' },
-  ...['balod','balodabazar','balrampur','bastar','bemetara','bijapur','bilaspur',
-    'dantewada','dhamtari','durg','gariaband','janjgir-champa','jashpur','kawardha',
-    'kanker','kondagaon','korba','korea','mahasamund','mungeli','narayanpur',
-    'raigarh','raipur','rajnandgaon','sukma','surajpur','surguja',
-    'gaurela-pendra-marwahi','manendragarh-chirmiri-bharatpur',
-    'mohla-manpur-ambagarhchowki','sarangarh-bilaigarh','sakti'
-  ].map(d => ({
-    name: d.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-'),
-    url: `https://${d}.gov.in/`
-  }))
+  { name: 'CSEB', url: 'https://cseb.gov.in/' }
 ];
 
 const keywordMap = {
@@ -43,7 +34,7 @@ function detectType(title, text) {
 
 async function scrapeWebsite(site) {
   try {
-    const { data } = await axios.get(site.url, { timeout: 15000, headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const { data } = await axios.get(site.url, { timeout: 8000, headers: { 'User-Agent': 'Mozilla/5.0' } });
     const $ = cheerio.load(data);
     const updateLinks = [];
     $('a').each((i, el) => {
