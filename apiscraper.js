@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-// सिर्फ 7 मुख्य वेबसाइटें (सभी 33 जिलों को हटा दिया)
+// सिर्फ 7 मुख्य वेबसाइटें
 const websites = [
   { name: 'CG Vyapam', url: 'https://cgvyapam.choice.gov.in/' },
   { name: 'CGPSC', url: 'https://psc.cg.gov.in/' },
